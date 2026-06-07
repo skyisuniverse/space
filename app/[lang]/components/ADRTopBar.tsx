@@ -1,19 +1,13 @@
-'use client';
-import { useTheme } from '@mui/material/styles';
-import {
-  Toolbar,
-  IconButton,
-  Typography,
-  Box,
-  Button,
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import Link from 'next/link';
-import { usePathname, useParams } from 'next/navigation';
-import MuiAppBar from '@mui/material/AppBar';
-import { styled } from '@mui/material/styles';
-import { drawerWidth } from './ResponsiveDrawer';
-import LanguageSwitcher from './LanguageSwitcher';
+"use client";
+import { useTheme } from "@mui/material/styles";
+import { Toolbar, IconButton, Typography, Box, Button } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import Link from "next/link";
+import { usePathname, useParams } from "next/navigation";
+import MuiAppBar from "@mui/material/AppBar";
+import { styled } from "@mui/material/styles";
+import { drawerWidth } from "./ResponsiveDrawer";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 type Dictionary = Record<string, string>;
 
@@ -22,22 +16,22 @@ interface AppBarProps {
 }
 
 const StyledAppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => ({
-  [theme.breakpoints.up('sm')]: {
+  [theme.breakpoints.up("sm")]: {
     ...(open
       ? {
           width: `calc(100% - ${drawerWidth}px)`,
           marginLeft: `${drawerWidth}px`,
-          transition: theme.transitions.create(['margin', 'width'], {
+          transition: theme.transitions.create(["margin", "width"], {
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen,
           }),
         }
       : {
-          width: '100%',
+          width: "100%",
           marginLeft: 0,
-          transition: theme.transitions.create(['margin', 'width'], {
+          transition: theme.transitions.create(["margin", "width"], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
           }),
@@ -56,17 +50,17 @@ export default function ADRTopBar({
   open,
   onDrawerOpen,
   onMobileDrawerToggle,
-  dict
+  dict,
 }: ADRTopBarProps) {
   const theme = useTheme();
   const pathname = usePathname();
   const { lang } = useParams() as { lang: string };
 
   const navItems = [
-    { title: dict.companies, href: 'companies' },
-    { title: dict.products, href: 'products' },
-    { title: dict.services, href: 'services' },
-    { title: dict.applications, href: 'apps' },   // uses /apps route + translated label
+    { title: dict.companies, href: "companies" },
+    { title: dict.products, href: "products" },
+    { title: dict.services, href: "services" },
+    { title: dict.applications, href: "apps" }, // uses /apps route + translated label
   ];
 
   // const pages = ['Companies', 'Products', 'Services', 'Apps'];
@@ -80,7 +74,7 @@ export default function ADRTopBar({
           aria-label="open drawer"
           onClick={onMobileDrawerToggle}
           edge="start"
-          sx={{ mr: 2, display: { xs: 'block', sm: 'none' } }}
+          sx={{ mr: 2, display: { xs: "block", sm: "none" } }}
         >
           <MenuIcon />
         </IconButton>
@@ -93,7 +87,7 @@ export default function ADRTopBar({
           edge="start"
           sx={{
             mr: 2,
-            display: { xs: 'none', sm: open ? 'none' : 'block' },
+            display: { xs: "none", sm: open ? "none" : "block" },
           }}
         >
           <MenuIcon />
@@ -109,9 +103,9 @@ export default function ADRTopBar({
           <Link
             href={`/${lang}`}
             color="inherit"
-            style={{ textDecoration: 'none' }}
+            style={{ textDecoration: "none" }}
           >
-            Extended Spaces
+            Space
           </Link>
         </Typography>
 
@@ -146,7 +140,7 @@ export default function ADRTopBar({
         </Box> */}
 
         {/* Right side: Language switcher + R&D Center link */}
-        <Box sx={{ display: 'flex', alignItems: 'center', ml: 'auto' }}>
+        <Box sx={{ display: "flex", alignItems: "center", ml: "auto" }}>
           <LanguageSwitcher />
           {/* <Typography
             variant="h6"
