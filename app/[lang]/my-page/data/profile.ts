@@ -1,3 +1,7 @@
+import React from "react";
+import { Cake, LocationCity, RocketLaunch } from "@mui/icons-material";
+import { FooterDetailItem } from "../types";
+
 export const profile = {
   name: "Nick Jones",
   status:
@@ -44,11 +48,7 @@ export const starshipImages = {
       "/images/post-2.jpeg",
       "/images/post-3.jpeg",
     ],
-    // post2: ["/images/post-4.jpeg", "/images/post-5.jpeg"],
-    post2: {
-      preview1: "/images/post-4.jpeg",
-      preview2: "/images/post-5.jpeg",
-    },
+    post2: { preview1: "/images/post-4.jpeg", preview2: "/images/post-5.jpeg" },
     post3: ["/images/quantum-data-center-space.jpg"],
     post5: "/images/robots-ai-satellite.jpg",
     post4: [
@@ -66,3 +66,25 @@ export const starshipImages = {
     preview2: "/images/video-2.jpeg",
   },
 };
+
+export const getFooterDetails = (lang: string): FooterDetailItem[] => [
+  {
+    icon: React.createElement(Cake, { sx: { color: "primary.main" } }),
+    label: "Birthday",
+    value: profile.birthday,
+    href: `/${lang}/profile/birthday`,
+  },
+  {
+    icon: React.createElement(LocationCity, { sx: { color: "primary.main" } }),
+    label: "City",
+    value: profile.city,
+    href: `/${lang}/profile/city`,
+  },
+  {
+    icon: React.createElement(RocketLaunch, { sx: { color: "primary.main" } }),
+    label: "Activity",
+    value: profile.activity,
+    href: `/${lang}/profile/activity`,
+    highlight: true,
+  },
+];
