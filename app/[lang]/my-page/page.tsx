@@ -10,17 +10,23 @@ interface PageProps {
   params: Promise<{ lang: string }>;
 }
 
+// ⏱️ Local Testing Helper: Delays server execution by custom milliseconds
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export default async function MyPage({ params }: PageProps) {
   const { lang } = await params;
 
-  // ⚡ INSTANT SERVER RESOLUTION: No network lag, no skeleton wait times
+  // 🧪 ARTIFICIAL LOADING TIMER FOR TESTING Skeleton
+  // Change 3000 (3 seconds) to whatever duration you want to see the skeleton for!
+  await sleep(1000);
+
+  // Fast runtime dataset resolutions
   const footerDetails = data.getFooterDetails(lang);
   const subscriptions = data.getSubscriptionData();
   const videos = data.getVideoData();
   const feedPosts = data.getFeedPosts(lang);
   const articles = data.getArticlesData();
 
-  // Mock dictionary labels fallback (Replace with your actual server dict lookup if needed)
   const labels = {
     friends: "Friends",
     music: "Audios",
@@ -29,7 +35,6 @@ export default async function MyPage({ params }: PageProps) {
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
-      {/* HERO COVER & PROFILE OVERVIEW HEADER */}
       <MyPageHeader
         coverUrl={data.starshipImages.profile}
         avatarUrl={data.starshipImages.avatar}
@@ -39,7 +44,6 @@ export default async function MyPage({ params }: PageProps) {
         footerDetails={footerDetails}
       />
 
-      {/* DUAL-COLUMN LAYOUT INTERFACE */}
       <Grid container spacing={4}>
         <MyPageSidebar
           lang={lang}
@@ -50,7 +54,6 @@ export default async function MyPage({ params }: PageProps) {
           videos={videos}
         />
 
-        {/* Stateful interactions are safely isolated inside this client child wrapper */}
         <MyPageInteractiveFeed
           lang={lang}
           avatarSrc={data.starshipImages.avatar}
