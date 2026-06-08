@@ -7,6 +7,8 @@ import {
   TextField,
   Stack,
   IconButton,
+  Button,
+  InputAdornment,
 } from "@mui/material";
 import {
   Image as ImageIcon,
@@ -14,6 +16,7 @@ import {
   InsertEmoticon,
   LocationOn,
   AddPhotoAlternate,
+  RocketLaunch,
 } from "@mui/icons-material";
 
 interface ProfilePostComposerProps {
@@ -27,11 +30,10 @@ export const ProfilePostComposer: React.FC<ProfilePostComposerProps> = ({
   profileName,
   placeholder = "What's happening in the universe today?",
 }) => {
-  // Configured actions list inside the component scope to keep template clean
+  // 1. Emoji icon is filtered out from this array since it lives inside the text area now
   const composerActions = [
     { icon: <ImageIcon fontSize="small" />, title: "Photo" },
     { icon: <Videocam fontSize="small" />, title: "Video" },
-    { icon: <InsertEmoticon fontSize="small" />, title: "Emoji" },
     { icon: <LocationOn fontSize="small" />, title: "Location" },
     { icon: <AddPhotoAlternate fontSize="small" />, title: "Layout" },
   ];
@@ -50,12 +52,12 @@ export const ProfilePostComposer: React.FC<ProfilePostComposerProps> = ({
       <Box
         sx={{
           display: "flex",
-          alignItems: { xs: "flex-start", sm: "center" },
+          alignItems: "flex-start",
           gap: 2,
-          flexDirection: { xs: "column", sm: "row" },
           width: "100%",
         }}
       >
+        {/* Avatar block */}
         <Avatar
           src={avatarSrc}
           alt={profileName}
@@ -67,62 +69,108 @@ export const ProfilePostComposer: React.FC<ProfilePostComposerProps> = ({
         />
 
         <Box sx={{ flex: 1, width: "100%" }}>
+          {/* Main Input Text Field Area */}
           <TextField
             fullWidth
             placeholder={placeholder}
             variant="outlined"
             size="medium"
             multiline
-            minRows={1}
-            maxRows={4}
+            minRows={2}
+            maxRows={6}
             sx={{
+              mb: 2,
               "& .MuiOutlinedInput-root": {
                 borderRadius: "12px",
                 bgcolor: "background.default",
-                "& fieldset": {
-                  borderColor: "divider",
-                },
-                "&:hover fieldset": {
-                  borderColor: "primary.light",
-                },
+                pr: 1, // Reduces padding on the right to make the inline emoji icon fit cleanly
+                "& fieldset": { borderColor: "divider" },
+                "&:hover fieldset": { borderColor: "primary.light" },
                 "&.Mui-focused fieldset": {
                   borderColor: "primary.main",
                   borderWidth: "1px",
                 },
               },
             }}
+            // 2. Insert the Emoji button directly inside the text input area on the right side
             InputProps={{
               endAdornment: (
-                <Stack
-                  direction="row"
-                  spacing={0.5}
-                  sx={{
-                    alignItems: "center",
-                    mr: -0.5,
-                    mt: { xs: 1, sm: 0 },
-                  }}
+                <InputAdornment
+                  position="end"
+                  sx={{ alignSelf: "flex-end", mb: 1 }}
                 >
-                  {composerActions.map((btn, idx) => (
-                    <IconButton
-                      key={idx}
-                      color="primary"
-                      size="small"
-                      title={btn.title}
-                      sx={{
-                        width: 32,
-                        height: 32,
-                        "&:hover": {
-                          bgcolor: "rgba(25, 118, 210, 0.08)",
-                        },
-                      }}
-                    >
-                      {btn.icon}
-                    </IconButton>
-                  ))}
-                </Stack>
+                  <IconButton
+                    color="primary"
+                    title="Emoji"
+                    sx={{
+                      width: 36,
+                      height: 36,
+                      "&:hover": { bgcolor: "rgba(25, 118, 210, 0.08)" },
+                    }}
+                  >
+                    <InsertEmoticon />
+                  </IconButton>
+                </InputAdornment>
               ),
             }}
           />
+
+          {/* Bottom Control Toolbar Action Row */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              alignItems: { xs: "stretch", sm: "center" },
+              justifyContent: "space-between",
+              gap: 2,
+            }}
+          >
+            {/* 1. Attachment Utility Tools Group — Horizontally left-aligned on all breakpoints */}
+            <Stack
+              direction="row"
+              spacing={0.5}
+              sx={{
+                justifyContent: "flex-start", // Left-aligned
+                flexWrap: "wrap",
+              }}
+            >
+              {composerActions.map((btn, idx) => (
+                <IconButton
+                  key={idx}
+                  color="primary"
+                  size="medium"
+                  title={btn.title}
+                  sx={{
+                    width: 38,
+                    height: 38,
+                    bgcolor: "rgba(25, 118, 210, 0.02)",
+                    "&:hover": {
+                      bgcolor: "rgba(25, 118, 210, 0.08)",
+                    },
+                  }}
+                >
+                  {btn.icon}
+                </IconButton>
+              ))}
+            </Stack>
+
+            {/* Core Action Submit Button with RocketLaunch themed alternative */}
+            <Button
+              variant="contained"
+              endIcon={<RocketLaunch />}
+              sx={{
+                borderRadius: "100px",
+                px: 3,
+                py: 1,
+                textTransform: "none",
+                fontWeight: 700,
+                letterSpacing: "0.01em",
+                boxShadow: "none",
+              }}
+            >
+              Post
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Paper>

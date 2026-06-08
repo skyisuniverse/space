@@ -34,7 +34,15 @@ export default async function MyPage({ params }: PageProps) {
   };
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
+    <Container
+      maxWidth="xl"
+      disableGutters // ⚡ Instantly removes the default mobile padding (16px) causing the scroll
+      sx={{
+        px: { xs: 0, sm: 3, md: 4 }, // Zero padding on mobile, clean spacing on desktop
+        py: { xs: 0, sm: 4 }, // Removes the heavy top/bottom margins on mobile
+      }}
+    >
+      {/* HEADER AREA */}
       <MyPageHeader
         coverUrl={data.starshipImages.profile}
         avatarUrl={data.starshipImages.avatar}
@@ -44,7 +52,12 @@ export default async function MyPage({ params }: PageProps) {
         footerDetails={footerDetails}
       />
 
-      <Grid container spacing={4}>
+      {/* MAIN TWO-COLUMN LAYOUT INTERFACE */}
+      <Grid
+        container
+        columnSpacing={4} // ⚡ Keeps the clean 32px column separation on desktop side-by-side grids
+        rowSpacing={{ xs: 0, md: 4 }} // ⚡ Fix: Drops rowSpacing to 0 on mobile, keeps 32px on desktop boards
+      >
         <MyPageSidebar
           lang={lang}
           labels={labels}
