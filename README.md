@@ -1,6 +1,4 @@
-# Architecture Decision Records
-
-[Architecture Decision Records website](https://architecture-decision-records.vercel.app/)
+# Space
 
 ## Development documentation
 
